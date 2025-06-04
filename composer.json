@@ -1,0 +1,12 @@
+{
+    "name": "menyong-menying/php-data",
+    "description": "Library untuk menyimpan, mengatur, dan mengelolah data.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "MenyongMenying",
+            "email": "menyongmenying.main@gmail.com"
+        }
+    ],
+    "require": {}
+}
