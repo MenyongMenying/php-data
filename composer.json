@@ -8,5 +8,10 @@
             "email": "menyongmenying.main@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "MenyongMenying\\PHP\\MenyongMenyingLibrary\\Data\\": "./sources/"
+        }
+    },
     "require": {}
 }
