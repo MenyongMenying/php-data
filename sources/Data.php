@@ -13,6 +13,8 @@ use Exception;
  * @since 2025-06-04
  * 
  * @method void __construct(array $data = [])
+ * @method void __set(string $key, mixed $value) Membuat/mengubah suatu property.
+ * @method bool existsProperty(string $key) Mengecek apakah ada property dengan nama tertentu.
  */
 final class Data
 {
@@ -39,5 +41,43 @@ final class Data
         }
 
         return;
+    }
+
+    /**
+     * __set(string $key, mixed $value)
+     * 
+     * Membuat/mengubah nilai suatu property.
+     *
+     * @param  string $key   
+     * @param  mixed  $value 
+     *
+     * @return void          
+     */
+    public function __set(string $key, mixed $value) :void
+    {
+        // Jika peroperty dengan nama $key tidak ditemukan maka akan membuat property baru, dan jika sudah ada property dengan nama $key maka akan mengubah nilai property tersebut
+        $this->{$key} = $value;
+
+        return;
+    }
+
+    /**
+     * existsProperty(string $key)
+     * 
+     * Mengecek apakah ada property dengan nama tertentu.
+     *
+     * @param  string  $key 
+     *
+     * @return boolean      
+     */
+    private function existsProperty(string $key) :bool
+    {
+        // Jika terdepat property dengan nama $key maka mengembalikan nilai true.
+        if (isset($this->{$key})) {
+            return true;
+        }
+
+        // Jika tidak ditemukan property dengan nama $key maka mengembalikan nilai false.
+        return false;
     }
 }
