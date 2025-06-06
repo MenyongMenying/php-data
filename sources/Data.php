@@ -14,6 +14,7 @@ use Exception;
  * 
  * @method void __construct(array $data = [])
  * @method void __set(string $key, mixed $value) Membuat/mengubah suatu property.
+ * @method mixed __get(string $key) Mengambil nilai suatu property, jika property yang akan diambil tidak ditemukan maka mengembalikan nilai null.
  * @method bool existsProperty(string $key) Mengecek apakah ada property dengan nama tertentu.
  */
 final class Data
@@ -59,6 +60,26 @@ final class Data
         $this->{$key} = $value;
 
         return;
+    }
+
+    /**
+     * __get(string $key)
+     * 
+     * Mengambil nilai suatu property, jika property yang akan diambil tidak ditemukan maka mengembalikan nilai null.
+     *
+     * @param  string $key 
+     *
+     * @return mixed       
+     */
+    public function __get(string $key) :mixed
+    {
+        // Jika ada property yang memiliki nama $key maka akan mengembalikan nilai dari property tersebut.   
+        if ($this->existsProperty($key)) {
+            return $this->{$key};
+        }
+
+        // Jika tidak ditemukan property dengan nama $key maka mengembalikan nilai null.
+        return null;
     }
 
     /**
