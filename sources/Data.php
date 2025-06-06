@@ -2,7 +2,7 @@
 
 namespace MenyongMenying\PHP\MenyongMenyingLibrary\Data;
 
-
+use ArrayAccess;
 use Exception;
 
 /**
@@ -16,8 +16,13 @@ use Exception;
  * @method void __set(string $key, mixed $value) Membuat/mengubah suatu property.
  * @method mixed __get(string $key) Mengambil nilai suatu property, jika property yang akan diambil tidak ditemukan maka mengembalikan nilai null.
  * @method bool propertyExists(string $key) Mengecek apakah ada property dengan nama tertentu.
+ * 
+ * @method bool offsetExists offsetExists(mixed $offset) Implementasi dari class ArrayAccess.
+ * @method void offsetSet(mixed $offset, mixed $value) Implementasi dari class ArrayAccess.
+ * @method mixed offsetGet(mixed $offset) Implementasi dari class ArrayAccess.
+ * @method void offsetUnset(mixed $offset) Implementasi dari class ArrayAccess.
  */
-final class Data
+final class Data implements ArrayAccess
 {
     /**
      * __construct(array $data = [])
@@ -100,5 +105,73 @@ final class Data
 
         // Jika tidak ditemukan property dengan nama $key maka mengembalikan nilai false.
         return false;
+    }
+
+    /**
+     * offsetExists(mixed $offset)
+     * 
+     * Method bawaan dari implementasi ArrayAccess
+     *
+     * @param  mixed   $offset 
+     *
+     * @return boolean         
+     */
+    public function offsetExists(mixed $offset): bool
+    {
+        return $this->propertyExists($offset);
+    }
+
+    /**
+     * offsetSet(mixed $offset, mixed $value)
+     * 
+     * Method bawaan dari implementasi ArrayAccess
+     *
+     * @param  mixed $offset 
+     * @param  mixed $value  
+     *
+     * @return void          
+     */
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        // Jika peroperty dengan nama $offset tidak ditemukan maka akan membuat property baru, dan jika sudah ada property dengan nama $offset maka akan mengubah nilai property tersebut
+        $this->{$offset} = $value;
+
+        return;
+    }
+
+    /**
+     * offsetGet(mixed $offset)
+     * 
+     * Method bawaan dari implementasi ArrayAccess
+     *
+     * @param  mixed $offset 
+     *
+     * @return void          
+     */
+    public function offsetGet(mixed $offset): mixed
+    {
+        // Jika ada property yang memiliki nama $pffset maka akan mengembalikan nilai dari property tersebut.   
+        if ($this->propertyExists($offset)) {
+            return $this->{$offset};
+        }
+
+        // Jika tidak ditemukan property dengan nama $pffset maka mengembalikan nilai null.
+        return null;
+    }
+
+    /**
+     * offsetUnset(mixed $offset)
+     * 
+     * Method bawaan dari implementasi ArrayAccess
+     *
+     * @param  mixed $offset 
+     *
+     * @return void          
+     */
+    public function offsetUnset(mixed $offset): void
+    {
+        unset($this->{$offset});
+
+        return;
     }
 }
